@@ -8,11 +8,22 @@
 Для этого замените разметку бейджей на следующий фрагмент, подставив вместо `${имя_пользователя}` и `${имя_репозитория}` соответствующие значения.
 
 ```
-[![Tests for sprint 13](https://github.com/${имя_пользователя}/${имя репозитория}/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/${имя_пользователя}/${имя репозитория}/actions/workflows/tests-13-sprint.yml) 
+[![Tests for sprint 13](https://github.com/${NataSolt}/${express-mesto-gha}/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/${NataSolt}/${express-mesto-gha}/actions/workflows/tests-13-sprint.yml) 
 
-[![Tests for sprint 14](https://github.com/${имя_пользователя}/${имя репозитория}/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/${имя_пользователя}/${имя репозитория}/actions/workflows/tests-14-sprint.yml)
+[![Tests for sprint 14](https://github.com/${NataSolt}/${express-mesto-gha}/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/${NataSolt}/${express-mesto-gha}/actions/workflows/tests-14-sprint.yml)
 ```
+Cервер для проекта Mesto
 
+Продолжение работы над проектом Mesto:
+
+Выполнен в рамках серии проектных работ в Яндекс.Практикуме по профессии «Веб-разработчик».
+
+
+Используемые технологии:
+Node.js
+express.js
+MongoDB
+Mongoose
 
 ## Директории
 
