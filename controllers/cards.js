@@ -88,7 +88,7 @@ module.exports.dislikeCard = (req, res) => {
 };
 
 // удаляем карточки по id
-module.exports.deleteCurrentCard = (req, res) => {
+module.exports.deleteCard = (req, res) => {
   const { cardId } = req.params;
   Card.findByIdAndRemove(cardId)
     .orFail(() => {
