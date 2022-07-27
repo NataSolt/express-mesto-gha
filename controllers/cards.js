@@ -25,7 +25,7 @@ module.exports.createCard = (req, res) => {
   })
     .then((card) => res.status(CREATED).send(card))
     .catch((error) => {
-      if (error.name === 'ValidationError') {
+      if (error.status === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Ошибка валидации' });
       } else {
         res
@@ -44,16 +44,16 @@ module.exports.likeCard = (req, res) => {
     .orFail(() => {
       const error = new Error();
 
-      error.name = NOT_FOUND;
+      error.status = NOT_FOUND;
       throw error; // throw создает ошибку
     })
     .then((card) => res.send(card))
     .catch((error) => {
-      if (error.name === 'CastError') {
+      if (error.status === 'CastError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
-      } else if (error.name === NOT_FOUND) {
+      } else if (error.status === NOT_FOUND) {
         res.status(NOT_FOUND).send({ message: 'Такой карточки нет' });
       } else {
         res.status(SERVER_ERROR).send({ message: error.message });
@@ -70,16 +70,16 @@ module.exports.dislikeCard = (req, res) => {
     .orFail(() => {
       const error = new Error();
 
-      error.name = NOT_FOUND;
+      error.status = NOT_FOUND;
       throw error; // throw создает ошибку
     })
     .then((card) => res.send(card))
     .catch((error) => {
-      if (error.name === 'CastError') {
+      if (error.status === 'CastError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
-      } else if (error.name === NOT_FOUND) {
+      } else if (error.status === NOT_FOUND) {
         res.status(NOT_FOUND).send({ message: 'Карточка не существует.' });
       } else {
         res.status(SERVER_ERROR).send({ message: error.message });
@@ -93,16 +93,16 @@ module.exports.deleteCard = (req, res) => {
   Card.findByIdAndRemove(cardId)
     .orFail(() => {
       const error = new Error();
-      error.name = NOT_FOUND;
+      error.status = NOT_FOUND;
       throw error; // throw создает ошибку
     })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => {
-      if (error.name === 'CastError') {
+      if (error.status === 'CastError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
-      } else if (error.name === NOT_FOUND) {
+      } else if (error.status === NOT_FOUND) {
         res.status(NOT_FOUND).send({ message: 'Такой карточки нет' });
       } else {
         res.status(SERVER_ERROR).send({ message: error.message });

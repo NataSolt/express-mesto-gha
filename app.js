@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const { NOT_FOUND } = require('./statusError');
 
 // Слушаем 3000 порт
 const { PORT = 3000 } = process.env;
@@ -32,7 +33,7 @@ app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
 app.use((req, res) => {
-  res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
+  res.status(NOT_FOUND).send({ message: 'Запрашиваемый ресурс не найден' });
 });
 
 app.listen(PORT, () => {

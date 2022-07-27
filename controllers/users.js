@@ -21,7 +21,7 @@ module.exports.createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.status(CREATED).send({ data: user }))
     .catch((error) => {
-      if (error.name === 'ValidationError') {
+      if (error.status === 'ValidationError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
@@ -38,16 +38,16 @@ module.exports.getUser = (req, res) => {
   User.findById(userId)
     .orFail(() => {
       const error = new Error();
-      error.name = NOT_FOUND;
+      error.status = NOT_FOUND;
       throw error;
     })
     .then((users) => res.send({ data: users }))
     .catch((error) => {
-      if (error.name === 'CastError') {
+      if (error.status === 'CastError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
-      } else if (error.name === NOT_FOUND) {
+      } else if (error.status === NOT_FOUND) {
         res.status(NOT_FOUND).send({ message: 'Такого пользователя нет' });
       } else {
         res.status(SERVER_ERROR).send({ message: error.message });
@@ -62,17 +62,21 @@ module.exports.patchUser = (req, res) => {
   User.findByIdAndUpdate(req.user._id, { name, about }, opts)
     .orFail(() => {
       const error = new Error();
-      error.name = NOT_FOUND;
+      error.status = NOT_FOUND;
       throw error;
     })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => {
-      if (error.name === 'ValidationError') {
+      if (error.status === 'ValidationError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
-      } else if (error.name === NOT_FOUND) {
-        res.status(NOT_FOUND).send({ message: 'Такого пользователя не существует' });
+      } else if (error.status === 'CastError') {
+        res.status(BAD_REQUEST).send({ message: 'Такого пользователя нет' });
+      } else if (error.status === NOT_FOUND) {
+        res
+          .status(NOT_FOUND)
+          .send({ message: 'Такого пользователя не существует' });
       } else {
         res.status(SERVER_ERROR).send({ message: error.message });
       }
@@ -87,16 +91,18 @@ module.exports.patchAvatar = (req, res) => {
   User.findByIdAndUpdate(req.user._id, { avatar }, opts)
     .orFail(() => {
       const error = new Error();
-      error.name = NOT_FOUND;
+      error.status = NOT_FOUND;
       throw error;
     })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => {
-      if (error.name === 'ValidationError') {
+      if (error.status === 'ValidationError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
-      } else if (error.name === NOT_FOUND) {
+      } else if (error.status === 'CastError') {
+        res.status(BAD_REQUEST).send({ message: 'Такого пользователя нет' });
+      } else if (error.status === NOT_FOUND) {
         res.status(NOT_FOUND).send({ message: 'Такого пользователя нет' });
       } else {
         res.status(SERVER_ERROR).send({ message: error.message });

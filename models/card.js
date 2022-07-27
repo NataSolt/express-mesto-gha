@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.ObjectId,
       default: [],
-      required: true,
     },
   ],
   createdAt: {
