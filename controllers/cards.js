@@ -25,7 +25,7 @@ module.exports.createCard = (req, res) => {
   })
     .then((card) => res.status(CREATED).send(card))
     .catch((error) => {
-      if (error.status === 'ValidationError') {
+      if (error.name === 'ValidationError') {
         res.status(BAD_REQUEST).send({ message: 'Ошибка валидации' });
       } else {
         res
@@ -49,7 +49,7 @@ module.exports.likeCard = (req, res) => {
     })
     .then((card) => res.send(card))
     .catch((error) => {
-      if (error.status === 'CastError') {
+      if (error.name === 'CastError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
@@ -75,7 +75,7 @@ module.exports.dislikeCard = (req, res) => {
     })
     .then((card) => res.send(card))
     .catch((error) => {
-      if (error.status === 'CastError') {
+      if (error.name === 'CastError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
@@ -98,7 +98,7 @@ module.exports.deleteCard = (req, res) => {
     })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => {
-      if (error.status === 'CastError') {
+      if (error.name === 'CastError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });

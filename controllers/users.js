@@ -21,7 +21,7 @@ module.exports.createUser = (req, res) => {
   User.create({ name, about, avatar })
     .then((user) => res.status(CREATED).send({ data: user }))
     .catch((error) => {
-      if (error.status === 'ValidationError') {
+      if (error.name === 'ValidationError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
@@ -43,7 +43,7 @@ module.exports.getUser = (req, res) => {
     })
     .then((users) => res.send({ data: users }))
     .catch((error) => {
-      if (error.status === 'CastError') {
+      if (error.name === 'CastError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
@@ -67,12 +67,12 @@ module.exports.patchUser = (req, res) => {
     })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => {
-      if (error.status === 'ValidationError') {
+      if (error.name === 'ValidationError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
-      } else if (error.status === 'CastError') {
-        res.status(BAD_REQUEST).send({ message: 'Такого пользователя нет' });
+      } else if (error.name === 'CastError') {
+        res.status(BAD_REQUEST).send({ message: 'Неверный формат переданных данных' });
       } else if (error.status === NOT_FOUND) {
         res
           .status(NOT_FOUND)
@@ -96,12 +96,12 @@ module.exports.patchAvatar = (req, res) => {
     })
     .then((cards) => res.send({ data: cards }))
     .catch((error) => {
-      if (error.status === 'ValidationError') {
+      if (error.name === 'ValidationError') {
         res
           .status(BAD_REQUEST)
           .send({ message: 'Неверный формат переданных данных' });
-      } else if (error.status === 'CastError') {
-        res.status(BAD_REQUEST).send({ message: 'Такого пользователя нет' });
+      } else if (error.name === 'CastError') {
+        res.status(BAD_REQUEST).send({ message: 'Неверный формат переданных данных' });
       } else if (error.status === NOT_FOUND) {
         res.status(NOT_FOUND).send({ message: 'Такого пользователя нет' });
       } else {
