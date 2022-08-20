@@ -121,6 +121,5 @@ module.exports.getUserById = (req, res, next) => {
         return;
       }
       next(err);
-    })
-    .catch(next);
+    });
 };
