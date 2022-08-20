@@ -53,9 +53,18 @@ module.exports.createUser = (req, res, next) => {
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
-      res.status(200).send({ data: user });
+      if (!user) {
+        throw new NotFound('Нет пользователя с таким id');
+      }
+      res.status(200).send(user);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequest('Невалидный id'));
+        return;
+      }
+      next(err);
+    });
 };
 
 // изменить данные
@@ -72,8 +81,7 @@ module.exports.patchUser = (req, res, next) => {
         return;
       }
       next(err);
-    })
-    .catch(next);
+    });
 };
 
 // обновить аватар
