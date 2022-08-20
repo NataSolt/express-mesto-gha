@@ -53,18 +53,9 @@ module.exports.createUser = (req, res, next) => {
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
-      if (!user) {
-        throw new NotFound('Нет пользователя с таким id');
-      }
-      res.status(200).send(user);
+      res.status(200).send({ data: user });
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequest('Невалидный id'));
-        return;
-      }
-      next(err);
-    });
+    .catch(next);
 };
 
 // изменить данные
