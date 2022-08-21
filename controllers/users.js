@@ -53,27 +53,16 @@ module.exports.createUser = (req, res, next) => {
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
     .then((user) => {
-      if (!user) {
-        throw new NotFound('Нет пользователя с таким id');
-      }
-      res.status(200).send(user);
+      res.status(200).send({ data: user });
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequest('Невалидный id'));
-        return;
-      }
-      next(err);
-    });
+    .catch(next);
 };
 
 // изменить данные
 module.exports.patchUser = (req, res, next) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate(req.user._id, { name, about }, {
-    new: true,
-    runValidators: true,
-  })
+  const opts = { runValidators: true, new: true };
+  User.findByIdAndUpdate(req.user._id, { name, about }, opts)
     .then((data) => {
       res.status(200).send(data);
     })
@@ -83,13 +72,15 @@ module.exports.patchUser = (req, res, next) => {
         return;
       }
       next(err);
-    });
+    })
+    .catch(next);
 };
 
 // обновить аватар
 module.exports.patchAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true, new: true })
+  const opts = { runValidators: true, new: true };
+  User.findByIdAndUpdate(req.user._id, { avatar }, opts)
     .then((data) => {
       res.status(200).send(data);
     })
