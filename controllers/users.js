@@ -52,11 +52,19 @@ module.exports.createUser = (req, res, next) => {
 // данные текущего юзера
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => new NotFound('Пользователь с таким id не найден'))
     .then((user) => {
-      res.status(200).send({ data: user });
+      if (!user) {
+        throw new NotFound('Нет пользователя с таким id');
+      }
+      res.status(200).send(user);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequest('Невалидный id'));
+        return;
+      }
+      next(err);
+    });
 };
 
 // изменить данные
@@ -66,7 +74,6 @@ module.exports.patchUser = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .orFail(() => new NotFound('Пользователь с таким id не найден'))
     .then((data) => {
       res.status(200).send(data);
     })
@@ -83,7 +90,6 @@ module.exports.patchUser = (req, res, next) => {
 module.exports.patchAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true, new: true })
-    .orFail(() => new NotFound('Пользователь с таким id не найден'))
     .then((data) => {
       res.status(200).send(data);
     })
