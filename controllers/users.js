@@ -52,6 +52,7 @@ module.exports.createUser = (req, res, next) => {
 // данные текущего юзера
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
+    .orFail(() => new NotFound('Нет пользователя с таким id'))
     .then((user) => {
       res.status(200).send({ data: user });
     })
