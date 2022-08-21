@@ -8,6 +8,7 @@ const { validateUserId, validateUpdateUser, validateUpdateAvatar } = require('..
 router.get('/', getUsers);
 router.post('/', createUser);
 router.get('/:userId', validateUserId, getUser);
+router.get('/me', getUser);
 router.patch('/me', validateUpdateUser, patchUser);
 router.patch('/me/avatar', validateUpdateAvatar, patchAvatar);
 
