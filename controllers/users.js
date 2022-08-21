@@ -52,7 +52,7 @@ module.exports.createUser = (req, res, next) => {
 // данные текущего юзера
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => new NotFound('Нет пользователя с таким id'))
+    .orFail(() => new NotFound('Пользователь с таким id не найден'))
     .then((user) => {
       res.status(200).send({ data: user });
     })
@@ -62,8 +62,11 @@ module.exports.getUser = (req, res, next) => {
 // изменить данные
 module.exports.patchUser = (req, res, next) => {
   const { name, about } = req.body;
-  const opts = { runValidators: true, new: true };
-  User.findByIdAndUpdate(req.user._id, { name, about }, opts)
+  User.findByIdAndUpdate(req.user._id, { name, about }, {
+    new: true,
+    runValidators: true,
+  })
+    .orFail(() => new NotFound('Пользователь с таким id не найден'))
     .then((data) => {
       res.status(200).send(data);
     })
@@ -79,8 +82,8 @@ module.exports.patchUser = (req, res, next) => {
 // обновить аватар
 module.exports.patchAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  const opts = { runValidators: true, new: true };
-  User.findByIdAndUpdate(req.user._id, { avatar }, opts)
+  User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true, new: true })
+    .orFail(() => new NotFound('Пользователь с таким id не найден'))
     .then((data) => {
       res.status(200).send(data);
     })
