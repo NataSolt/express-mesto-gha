@@ -49,6 +49,23 @@ module.exports.createUser = (req, res, next) => {
     });
 };
 
+module.exports.getUserById = (req, res, next) => {
+  User.findById(req.params.userId)
+    .then((user) => {
+      if (!user) {
+        throw new NotFound('Нет пользователя с таким id');
+      }
+      res.status(200).send(user);
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequest('Невалидный id'));
+        return;
+      }
+      next(err);
+    });
+};
+
 // данные текущего юзера
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
@@ -105,21 +122,4 @@ module.exports.login = (req, res, next) => {
       res.status(200).send({ token });
     })
     .catch(next);
-};
-
-module.exports.getUserById = (req, res, next) => {
-  User.findById(req.params.userId)
-    .then((user) => {
-      if (!user) {
-        throw new NotFound('Нет пользователя с таким id');
-      }
-      res.status(200).send(user);
-    })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequest('Невалидный id'));
-        return;
-      }
-      next(err);
-    });
 };
