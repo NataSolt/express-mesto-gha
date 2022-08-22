@@ -23,19 +23,8 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     family: 4,
-  })
-  // eslint-disable-next-line no-console
-  .then(() => console.log('yes'))
-  // eslint-disable-next-line no-console
-  .catch((e) => console.log(e));
+  });
 
-// app.use((req, res, next) => {
-//   req.user = {
-//     _id: '62e026d24585eacf315430db', // мой id
-//   };
-
-//   next();
-// });
 app.post('/signin', validateLogin, login);
 app.post('/signup', validateCreateUser, createUser);
 
@@ -53,7 +42,4 @@ app.use((err, req, res, next) => {
   res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка' : message });
   next();
 });
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`App listening on port ${PORT}`);
-});
+app.listen(PORT);

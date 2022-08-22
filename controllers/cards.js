@@ -75,7 +75,7 @@ module.exports.dislikeCard = (req, res, next) => {
 // удаляем карточки по id
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-  Card.findByIdAndRemove(cardId)
+  Card.findById(cardId)
     .then((card) => {
       if (!card) {
         throw new NotFound('Карточка с указанным _id не найдена');

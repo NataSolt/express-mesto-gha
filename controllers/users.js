@@ -88,8 +88,7 @@ module.exports.patchUser = (req, res, next) => {
         return;
       }
       next(err);
-    })
-    .catch(next);
+    });
 };
 
 // обновить аватар
@@ -105,8 +104,7 @@ module.exports.patchAvatar = (req, res, next) => {
         return;
       }
       next(err);
-    })
-    .catch(next);
+    });
 };
 
 module.exports.login = (req, res, next) => {
