@@ -10,11 +10,11 @@ Cервер для проекта [React-mesto](https://github.com/NataSolt/mest
 
 ## Используемые технологии:
 
-* [Express](https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white)
-* [MongoDB](https://img.shields.io/badge/-MongoDB-56a14b?logo=mongodb&logoColor=white)
-* [Node](https://img.shields.io/badge/-Node.js-469837?logo=Node.js&logoColor=white)
-* [JavaScript](https://img.shields.io/badge/-JavaScript-f3de35?logo=javaScript&logoColor=black)
-* [API](https://img.shields.io/badge/-api-yellow)
+* ![Express](https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white)
+* ![MongoDB](https://img.shields.io/badge/-MongoDB-56a14b?logo=mongodb&logoColor=white)
+* ![Node](https://img.shields.io/badge/-Node.js-469837?logo=Node.js&logoColor=white)
+* ![JavaScript](https://img.shields.io/badge/-JavaScript-f3de35?logo=javaScript&logoColor=black)
+* ![API](https://img.shields.io/badge/-api-yellow)
 
 ## Директории:
 
